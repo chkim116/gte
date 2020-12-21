@@ -1,8 +1,8 @@
-import Head from "next/head";
 import React, { useEffect, useRef, useState } from "react";
 import { useInput } from "@cooksmelon/event";
 import styled from "@emotion/styled";
 import Axios from "axios";
+import { NextSeo } from "next-seo";
 
 const Container = styled.div`
     width: 100%;
@@ -109,9 +109,18 @@ const index = () => {
 
     return (
         <Container>
-            <Head>
-                <title>Get To Emoji! | 이모지를 쉽게 가져오세요</title>
-            </Head>
+            <NextSeo
+                title="GetToEmoji! | 이모지를 쉽게 가져오세요"
+                description="이모지를 검색하고 클릭해서 바로 복사 후 사용하세요!"
+                canonical="https://gte.vercel.app/"
+                openGraph={{
+                    url: "https://gte.vercel.app/",
+                    title: "GetToEmoji! | 이모지를 쉽게 가져오세요",
+                    description:
+                        "이모지를 검색하고 클릭해서 바로 복사 후 사용하세요!",
+                    site_name: "gettoemoji",
+                }}
+            />
             {open && <Message>클립보드 복사</Message>}
             <form onSubmit={onSumbit}>
                 <input
