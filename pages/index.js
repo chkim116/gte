@@ -79,12 +79,16 @@ const index = () => {
         e.preventDefault();
         const getEmoji = async () => {
             setLoading(true);
-            await Axios.post("/search", {
-                text,
-            }).then((res) => {
-                setData(res.data);
-            });
-            setLoading(false);
+            try {
+                await Axios.post("/search", {
+                    text,
+                }).then((res) => {
+                    setData(res.data);
+                });
+                setLoading(false);
+            } catch (err) {
+                setLoading(false);
+            }
         };
         getEmoji();
     };
@@ -126,13 +130,13 @@ const index = () => {
                 <input
                     onChange={onChange}
                     type="text"
-                    placeholder="Searching Emoji!"
+                    placeholder="only English"
                 />
                 <button type="submit">검색하기</button>
             </form>
-            {loading && <div>...Loading</div>}
+            {loading && <div>...Loading, 첫 검색 시 느릴 수 있습니다.</div>}
             <EmojiContainer>
-                {data &&
+                {data.length > 0 &&
                     data.map((v) => (
                         <Emoji key={v.id}>
                             <div ref={emoji} onClick={onClick}>
