@@ -16,6 +16,7 @@
         "@emotion/react": "^11.1.2",
         "@emotion/styled": "^11.0.0",
         "axios": "^0.21.0",
+        "cheerio": "^1.0.0-rc.5",
         "next": "^10.0.2",
         "next-images": "^1.6.2",
         "next-seo": "^4.17.0",

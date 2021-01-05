@@ -69,7 +69,7 @@ const Emoji = styled.div`
 
 const index = () => {
     const [text, onChange] = useInput("");
-    const [data, setData] = useState([]);
+    const [data, setData] = useState([{ emoji: "", id: "" }]);
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
 
@@ -80,13 +80,14 @@ const index = () => {
         const getEmoji = async () => {
             setLoading(true);
             try {
-                await Axios.post("/search", {
+                await Axios.post("/api/emoji", {
                     text,
                 }).then((res) => {
                     setData(res.data);
                 });
                 setLoading(false);
             } catch (err) {
+                alert("영어로 입력해 주세요");
                 setLoading(false);
             }
         };
@@ -134,14 +135,17 @@ const index = () => {
                 />
                 <button type="submit">검색하기</button>
             </form>
-            {loading && <div>...Loading, 첫 검색 시 느릴 수 있습니다.</div>}
+            {loading && <div>Loading . . .</div>}
+            {data[0].emoji === null && <div>검색 결과가 없습니다.</div>}
             <EmojiContainer>
                 {data.length > 0 &&
                     data.map((v) => (
                         <Emoji key={v.id}>
-                            <div ref={emoji} onClick={onClick}>
-                                {v.emoji && v.emoji}
-                            </div>
+                            {v.emoji !== "" && v.emoji !== null && (
+                                <div ref={emoji} onClick={onClick}>
+                                    {v.emoji}
+                                </div>
+                            )}
                         </Emoji>
                     ))}
             </EmojiContainer>
